@@ -361,10 +361,5 @@ public class JdbcProductRepository implements Repository<Product> {
         return null;
     }
 
-    @Override
-    public Reservation findOpenedPer(Client client) {
-        return null;
-    }
-
 
 }
