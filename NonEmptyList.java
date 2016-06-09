@@ -35,7 +35,7 @@ public class NonEmptyList<T> implements FunList<T> {
 
     @Override
     public FunList<T> filter(Predicate<T> predicate) {
-        return predicate.test(head) ? new NonEmptyList<>(head, tail) : tail.filter(predicate);
+        return predicate.test(head) ? new NonEmptyList<>(head, tail.filter(predicate)) : tail.filter(predicate);
     }
 
     @Override
