@@ -59,7 +59,7 @@ public class NonEmptyList<T> implements FunList<T> {
     }
 
     private FunList<T> getSubFunList(int startIndex, int endIndex) {
-        return startIndex == 0 ? new NonEmptyList<>(head, tail.sublist(0, endIndex - 1)) : tail.sublist(0, endIndex - 1);
+        return startIndex == 0 ? new NonEmptyList<>(head, tail.sublist(0, endIndex - 1)) : tail.sublist(startIndex - 1, endIndex - 1);
     }
 
     private boolean isCorrectIndexes(int startIndex, int endIndex) {
