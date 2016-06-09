@@ -22,10 +22,10 @@ public class JdbcProductRepository implements Repository<Product> {
     private final String login;
     private final String password;
 
-    public JdbcProductRepository(String url, String login, String pwd) {
+    public JdbcProductRepository(String url, String login, String password) {
         this.url = url;
         this.login = login;
-        this.password = pwd;
+        this.password = password;
     }
 
     private Connection getConnection() throws SQLException {
