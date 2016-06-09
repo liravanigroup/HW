@@ -16,7 +16,7 @@ import static org.junit.Assert.assertEquals;
 
 
 public class JdbcProductRepositoryTest {
-    private Repository repo;
+    private Repository<Product> repo;
 
     @Before
     public void setUp() throws Exception {
@@ -55,7 +55,7 @@ public class JdbcProductRepositoryTest {
     @Test
     public void shouldLoadProductByNumber() throws SQLException {
         // when
-        Product product = (Product) repo.load("nr1");
+        Product product = repo.load("nr1");
 
         // then
         assertEquals("nr1", product.getNumber());
@@ -65,7 +65,7 @@ public class JdbcProductRepositoryTest {
     @Test
     public void shouldReturnNullWhenProductDoesNotExists() throws SQLException {
         // when
-        Product product2 = (Product) repo.load("nr14");
+        Product product2 = repo.load("nr14");
 
         //then
         Assert.assertNull(product2);
@@ -95,7 +95,7 @@ public class JdbcProductRepositoryTest {
         repo.save(saved);
 
         //When
-        Product loadedProduct = (Product) repo.load(saved.getNumber());
+        Product loadedProduct = repo.load(saved.getNumber());
 
         //then
         Assert.assertEquals(saved.getNumber(), loadedProduct.getNumber());
@@ -104,13 +104,13 @@ public class JdbcProductRepositoryTest {
     @Test
     public void shouldSaveProductWithTags() {
         // given
-        Picture saved = new Picture("Name", "nr122", Money.FIVE_PL, true, "Tag1", "Tag3");
+        Product saved = new Picture("Name", "nr122", Money.FIVE_PL, true, "Tag1", "Tag3");
 
         //When
         repo.save(saved);
 
         //then
-        Picture loadedProduct = (Picture) repo.load(saved.getNumber());
+        Product loadedProduct = repo.load(saved.getNumber());
 
         assertArrayEquals(saved.getTags(), loadedProduct.getTags());
     }
@@ -118,15 +118,15 @@ public class JdbcProductRepositoryTest {
     @Test
     public void shouldUpdateProductWhenTagsCountIsMore(){
         // given
-        Picture savedPicture = new Picture("Name", "nr122", Money.FIVE_PL, true, "Tag1", "Tag3");
-        Picture updatePicture = new Picture("Name", "nr122", Money.FIVE_PL, true, "Tag3", "Tag1", "Tag2", "Tag4");
+        Product savedPicture = new Picture("Name", "nr122", Money.FIVE_PL, true, "Tag1", "Tag3");
+        Product updatePicture = new Picture("Name", "nr122", Money.FIVE_PL, true, "Tag3", "Tag1", "Tag2", "Tag4");
 
         //When
         repo.save(savedPicture);
         repo.save(updatePicture);
 
         //then
-        Picture loadedProduct = (Picture) repo.load(savedPicture.getNumber());
+        Product loadedProduct = repo.load(savedPicture.getNumber());
 
         assertEquals(updatePicture,loadedProduct);
     }
@@ -134,15 +134,15 @@ public class JdbcProductRepositoryTest {
     @Test
     public void shouldUpdateProductWhenTagsCountTsLess(){
         // given
-        Picture savedPicture = new Picture("Name", "nr122", Money.FIVE_PL, true, "Tag3", "Tag1", "Tag2", "Tag4");
-        Picture updatePicture = new Picture("Name", "nr122", Money.FIVE_PL, true, "Tag1", "Tag3");
+        Product savedPicture = new Picture("Name", "nr122", Money.FIVE_PL, true, "Tag3", "Tag1", "Tag2", "Tag4");
+        Product updatePicture = new Picture("Name", "nr122", Money.FIVE_PL, true, "Tag1", "Tag3");
 
         //When
         repo.save(savedPicture);
         repo.save(updatePicture);
 
         //then
-        Picture loadedProduct = (Picture) repo.load(savedPicture.getNumber());
+        Product loadedProduct = repo.load(savedPicture.getNumber());
 
         assertEquals(updatePicture,loadedProduct);
     }
@@ -151,15 +151,15 @@ public class JdbcProductRepositoryTest {
     @Test
     public void shouldUpdateProductWithShackedTags(){
         // given
-        Picture savedPicture = new Picture("Name1", "nr12", Money.FIVE_PL, true, "Tag1", "Tag3");
-        Picture updatePicture = new Picture("Name2", "nr12", Money.FIVE_PL, true, "Tag3", "Tag1");
+        Product savedPicture = new Picture("Name1", "nr12", Money.FIVE_PL, true, "Tag1", "Tag3");
+        Product updatePicture = new Picture("Name2", "nr12", Money.FIVE_PL, true, "Tag3", "Tag1");
 
         //When
         repo.save(savedPicture);
         repo.save(updatePicture);
 
         //then
-        Picture loadedProduct = (Picture) repo.load(savedPicture.getNumber());
+        Product loadedProduct = repo.load(savedPicture.getNumber());
 
         assertEquals("Name2", loadedProduct.getName());
         assertEquals(updatePicture,loadedProduct);
@@ -168,15 +168,15 @@ public class JdbcProductRepositoryTest {
     @Test
     public void shouldUpdateProductWithoutTags(){
         // given
-        Picture savedPicture = new Picture("Name1", "nr12", Money.FIVE_PL, true);
-        Picture updatePicture = new Picture("Name2", "nr12", Money.FIVE_PL, true, "Tag3", "Tag1");
+        Product savedPicture = new Picture("Name1", "nr12", Money.FIVE_PL, true);
+        Product updatePicture = new Picture("Name2", "nr12", Money.FIVE_PL, true, "Tag3", "Tag1");
 
         //When
         repo.save(savedPicture);
         repo.save(updatePicture);
 
         //then
-        Picture loadedProduct = (Picture) repo.load(savedPicture.getNumber());
+        Product loadedProduct = repo.load(savedPicture.getNumber());
 
         assertEquals(updatePicture,loadedProduct);
     }
@@ -184,15 +184,15 @@ public class JdbcProductRepositoryTest {
     @Test
     public void shouldUpdateProductWithoutTags2(){
         // given
-        Picture savedPicture = new Picture("Name1", "nr12", Money.FIVE_PL, true);
-        Picture updatePicture = new Picture("Name2", "nr12", Money.FIVE_PL, true);
+        Product savedPicture = new Picture("Name1", "nr12", Money.FIVE_PL, true);
+        Product updatePicture = new Picture("Name2", "nr12", Money.FIVE_PL, true);
 
         //When
         repo.save(savedPicture);
         repo.save(updatePicture);
 
         //then
-        Picture loadedProduct = (Picture) repo.load(savedPicture.getNumber());
+        Product loadedProduct = repo.load(savedPicture.getNumber());
 
         assertEquals(updatePicture,loadedProduct);
     }
