@@ -50,21 +50,12 @@ public class NonEmptyList<T> implements FunList<T> {
     }
 
     @Override
-    public FunList<T> sublist(int startIndex, int endIndex) {
-        return isCorrectIndexes(startIndex, endIndex) ? getSubFunList(startIndex, endIndex) : getEmptyFunList();
+   public FunList<T> sublist(int startIndex, int endIndex) {
+        if(endIndex <= 0) return new EmptyList<>();
+        return startIndex == 0 ? new NonEmptyList<>(head, tail.sublist(startIndex, endIndex-1)) : tail.sublist(startIndex - 1, endIndex - 1);
     }
 
-    private EmptyList<T> getEmptyFunList() {
-        return new EmptyList<>();
-    }
-
-    private FunList<T> getSubFunList(int startIndex, int endIndex) {
-        return startIndex == 0 ? new NonEmptyList<>(head, tail.sublist(0, endIndex - 1)) : tail.sublist(startIndex - 1, endIndex - 1);
-    }
-
-    private boolean isCorrectIndexes(int startIndex, int endIndex) {
-        return startIndex >= 0 && startIndex <= tail.size() - 1 && endIndex >= 0 && endIndex <= tail.size() - 1;
-    }
+    
 
     @Override
     public boolean contains(T element) {
