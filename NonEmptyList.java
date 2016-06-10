@@ -51,11 +51,9 @@ public class NonEmptyList<T> implements FunList<T> {
 
     @Override
    public FunList<T> sublist(int startIndex, int endIndex) {
-        if(endIndex <= 0) return new EmptyList<>();
+        if(endIndex <= 0 || startIndex < 0) return new EmptyList<>();
         return startIndex == 0 ? new NonEmptyList<>(head, tail.sublist(startIndex, endIndex-1)) : tail.sublist(startIndex - 1, endIndex - 1);
     }
-
-    
 
     @Override
     public boolean contains(T element) {
